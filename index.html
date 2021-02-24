@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,20 +10,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
     <title>Javascript Fundamentals Quiz</title>
 </head>
+
 <body>
     <div class="card">
         <div id="questions" class="hidden">
             <div id="question">This is an example question?</div>
+            <div id="answers" class="answer-grid">
+                <button id="answerbtn" class="btn">Answer 1</button>
+                <button id="answerbtn" class="btn">Answer 2</button>
+                <button id="answerbtn" class="btn">Answer 3</button>
+                <button id="answerbtn" class="btn">Answer 4</button>
+            </div>
         </div>
-        <div id="answers" class="answer-grid">
-            <button class="btn">Answer 1</button>
-            <button class="btn">Answer 2</button>
-            <button class="btn">Answer 3</button>
-            <button class="btn">Answer 4</button>
+        <div class="nav">
+            <button id="start" class="startbtn btn">Start Quiz</button>
+            <button id="next" class="nextbtn btn hidden">Next Question ></button>
         </div>
-        <div class="nav"><button id="next" class="nextbtn btn hidden">Next Question ></button></div>
     </div>
-    
+
     <script src="assets/js/script.js"></script>
 </body>
+
 </html>

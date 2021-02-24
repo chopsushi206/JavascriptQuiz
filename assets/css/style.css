@@ -48,5 +48,16 @@ body {
 
 .nav {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
+}
+
+.startbtn, .nextbtn {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 8px;
+}
+
+.hidden {
+    display: none;
 }
