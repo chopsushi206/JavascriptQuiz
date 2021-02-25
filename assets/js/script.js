@@ -1,3 +1,12 @@
+// Convert timer into minutes and seconds
+// Display quizOver screen when timer ends or all questions answered
+// write function to decrement timer 10 seconds when wrong answer given
+// have answers from question object insert into answer buttons
+// write a function for choosing an answer
+// need a function to keep track of score and store score once quiz is over.
+
+
+
 const startBtn = document.getElementById('start');
 const questionsEl = document.getElementById('questions');
 const questionEl = document.getElementById('question');
@@ -6,12 +15,21 @@ const timerEl = document.getElementById("countdown");
 
 let randomQuestion, chosenQuestion
 
-var timeLeft = 10;
+
+// Script for Countdown Timer
+
+var timeLeft = 120;
 
 function setCountdown() {
   var timerInterval = setInterval(function() {
     timeLeft--;
-    timerEl.textContent = timeLeft + " seconds remaining.";
+
+    minutes = (Math.floor(timeLeft / 60));
+    seconds = timeLeft % 60;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    timerEl.textContent = minutes + ":" + seconds + " remaining.";
 
     if(timeLeft === 0) {
       clearInterval(timerInterval);
@@ -29,6 +47,8 @@ function newQuestion() {
     resetQuestion()
     showQuestion(randomQuestion[chosenQuestion])
 };
+
+// Script for questions
 
 function showQuestion(question) {
     questionEl.innerText = question.question;
@@ -53,6 +73,8 @@ const questions = [
         ]
     }
 ]
+
+// Script to start quiz
 
 startBtn.addEventListener('click', startQuiz);
 
