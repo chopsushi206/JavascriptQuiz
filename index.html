@@ -23,7 +23,8 @@
                 <button id="answerbtn" class="btn">Answer 4</button>
             </div>
         </div>
-        <div id="quizOver"><h1>- High Scores -</h1>
+        <div id="quizOver" class="highScore hidden">
+            <h1>- High Scores -</h1>
             <ol>
                 <li>jeff</li>
                 <li>frank</li>
@@ -32,6 +33,13 @@
                 <li>your mom</li>
             </ol>
             <p>The Quiz is over! Please enter your name to retain your score.</p>
+            <p>
+            <form>
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" size="20" maxlength="30">
+                <input type="submit" value="Submit" class="btn">
+            </form>
+            </p>
         </div>
         <div class="nav">
             <button id="start" class="startbtn btn">Start Quiz</button>
