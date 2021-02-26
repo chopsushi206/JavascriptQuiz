@@ -58,9 +58,6 @@ function showQuestion(question) {
         button.innerText = answer.text;
         button.classList.add('btn');
         answerEl.appendChild(button);
-        if (answer.correct) {
-            button.dataset.correct = answer.correct
-        };
         button.addEventListener('click', chooseAnswer());
     })
 
@@ -74,10 +71,39 @@ function resetQuestion() {
 };
 
 function chooseAnswer() {
-
+    if (randomQuestion.length > chosenQuestion + 1) {
+        nextBtn.classList.remove('hidden')
+      };
 };
 
 const questions = [
+    {
+        question: 'What is a word used to declare a variable?',
+        answers: [
+            { text: 'variable', correct: false },
+            { text: 'y', correct: false },
+            { text: 'var', correct: true },
+            { text: 'value', correct: false }
+        ]
+    },
+    {
+        question: 'What is a word used to declare a variable?',
+        answers: [
+            { text: 'variable', correct: false },
+            { text: 'y', correct: false },
+            { text: 'var', correct: true },
+            { text: 'value', correct: false }
+        ]
+    },
+    {
+        question: 'What is a word used to declare a variable?',
+        answers: [
+            { text: 'variable', correct: false },
+            { text: 'y', correct: false },
+            { text: 'var', correct: true },
+            { text: 'value', correct: false }
+        ]
+    },
     {
         question: 'What is a word used to declare a variable?',
         answers: [
@@ -94,7 +120,6 @@ const questions = [
 startBtn.addEventListener('click', startQuiz);
 
 function startQuiz() {
-    console.log('Started');
     startBtn.classList.add('hidden');
     questionsEl.classList.remove('hidden');
     randomQuestion = questions.sort(() => Math.random() - .5);
