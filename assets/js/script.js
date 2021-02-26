@@ -1,12 +1,11 @@
-// Display quizOver screen when timer ends or all questions answered
 // write function to decrement timer 10 seconds when wrong answer given
-// have answers from question object insert into answer buttons
 // write a function for choosing an answer
 // need a function to keep track of score and store score once quiz is over.
 
 
 
 const startBtn = document.getElementById('start');
+const restartBtn = document.getElementById('restart');
 const nextBtn = document.getElementById('next');
 const questionsEl = document.getElementById('questions');
 const questionEl = document.getElementById('question');
@@ -20,7 +19,7 @@ let randomQuestion, chosenQuestion
 
 // Script for Countdown Timer
 
-var timeLeft = 10;
+var timeLeft = 120;
 
 function setCountdown() {
     var timerInterval = setInterval(function () {
@@ -35,8 +34,10 @@ function setCountdown() {
 
         if (timeLeft === 0) {
             clearInterval(timerInterval);
+            nextBtn.classList.add('hidden');
             questionsEl.classList.add('hidden');
             quizoverEl.classList.remove('hidden');
+            restartBtn.classList.remove('hidden');
         }
 
     }, 1000);
@@ -73,7 +74,9 @@ function resetQuestion() {
 function chooseAnswer() {
     if (randomQuestion.length > chosenQuestion + 1) {
         nextBtn.classList.remove('hidden')
-    } else {nextBtn.classList.add('hidden');
+    } else { questionsEl.classList.add('hidden');
+             quizoverEl.classList.remove('hidden');
+             restartBtn.classList.remove('hidden');
       };
 };
 
@@ -83,6 +86,8 @@ function nextQuestion () {
     chosenQuestion++
     newQuestion()
 };
+
+// Quiz Questions Object
 
 const questions = [
     {
@@ -95,37 +100,55 @@ const questions = [
         ]
     },
     {
-        question: 'What is a word used to declare a variable?',
+        question: 'A variable can contain which items?',
         answers: [
-            { text: 'variable', correct: false },
-            { text: 'y', correct: false },
-            { text: 'var', correct: true },
-            { text: 'value', correct: false }
+            { text: 'Strings', correct: false },
+            { text: 'Numbers', correct: false },
+            { text: 'Booleans', correct: false },
+            { text: 'Any of these', correct: true }
         ]
     },
     {
-        question: 'What is a word used to declare a variable?',
+        question: 'Is javascript a case-sensitive language?',
         answers: [
-            { text: 'variable', correct: false },
-            { text: 'y', correct: false },
-            { text: 'var', correct: true },
-            { text: 'value', correct: false }
+            { text: 'yes', correct: true },
+            { text: 'no', correct: false }
         ]
     },
     {
-        question: 'What is a word used to declare a variable?',
+        question: 'Which of the following type of variable is visible everywhere in your JavaScript code?',
         answers: [
-            { text: 'variable', correct: false },
-            { text: 'y', correct: false },
-            { text: 'var', correct: true },
-            { text: 'value', correct: false }
+            { text: 'Global variables', correct: true },
+            { text: 'Local variables', correct: false },
+            { text: 'Both of these', correct: false },
+            { text: 'None of these', correct: false }
         ]
-    }
+    }, 
+    {
+        question: 'Which built-in method combines the text of two strings and returns a new string?',
+        answers: [
+            { text: 'append()', correct: false },
+            { text: 'concant()', correct: true },
+            { text: 'attatch()', correct: false },
+            { text: 'None of these', correct: false }
+        ]
+    }, 
+    {
+        question: 'Which of the following type of variable takes precedence over other if names are same?',
+        answers: [
+            { text: 'Global', correct: false },
+            { text: 'Local', correct: true },
+            { text: 'Both of these', correct: false },
+            { text: 'None of these', correct: false }
+        ]
+    }, 
+
 ]
 
 // Script to start quiz
 
 startBtn.addEventListener('click', startQuiz);
+restartBtn.addEventListener('click', restartQuiz);
 
 function startQuiz() {
     startBtn.classList.add('hidden');
@@ -134,4 +157,14 @@ function startQuiz() {
     chosenQuestion = 0;
     newQuestion();
     setCountdown();
+};
+
+function restartQuiz () {
+    questionsEl.classList.remove('hidden');
+    randomQuestion = questions.sort(() => Math.random() - .5);
+    chosenQuestion = 0;
+    newQuestion();
+    setCountdown();
+    quizoverEl.classList.add('hidden');
+    restartBtn.classList.add('hidden');
 };

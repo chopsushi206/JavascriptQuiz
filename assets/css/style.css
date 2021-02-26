@@ -18,6 +18,9 @@ body {
 }
 
 ol {
+    width: 100%;
+    justify-content: center;
+    display: grid;
     margin: 20px;
 }
 
@@ -41,9 +44,16 @@ ol {
 
 .highScore {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 
+}
+
+.highScore p {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 10px;
 }
 
 .answer-grid {
@@ -71,7 +81,7 @@ ol {
     
 }
 
-.startbtn, .nextbtn {
+.startbtn, .nextbtn, .restartbtn {
     font-weight: bold;
     font-size: 18px;
     padding: 8px;
