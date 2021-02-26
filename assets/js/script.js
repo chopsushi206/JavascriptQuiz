@@ -1,4 +1,3 @@
-// Convert timer into minutes and seconds
 // Display quizOver screen when timer ends or all questions answered
 // write function to decrement timer 10 seconds when wrong answer given
 // have answers from question object insert into answer buttons
@@ -8,10 +7,12 @@
 
 
 const startBtn = document.getElementById('start');
+const nextBtn = document.getElementById('next');
 const questionsEl = document.getElementById('questions');
 const questionEl = document.getElementById('question');
-const AnswerEl = document.getElementById('answerbtn');
+const answerEl = document.getElementById('answers');
 const timerEl = document.getElementById("countdown");
+
 
 let randomQuestion, chosenQuestion
 
@@ -21,26 +22,26 @@ let randomQuestion, chosenQuestion
 var timeLeft = 120;
 
 function setCountdown() {
-  var timerInterval = setInterval(function() {
-    timeLeft--;
+    var timerInterval = setInterval(function () {
+        timeLeft--;
 
-    minutes = (Math.floor(timeLeft / 60));
-    seconds = timeLeft % 60;
+        minutes = (Math.floor(timeLeft / 60));
+        seconds = timeLeft % 60;
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
-    timerEl.textContent = minutes + ":" + seconds + " remaining.";
+        timerEl.textContent = minutes + ":" + seconds + " remaining.";
 
-    if(timeLeft === 0) {
-      clearInterval(timerInterval);
-      sendMessage();
-    }
+        if (timeLeft === 0) {
+            clearInterval(timerInterval);
+            sendMessage();
+        }
 
-  }, 1000);
+    }, 1000);
 };
 
 function sendMessage() {
-  timerEl.textContent = "Times Up!";
+    timerEl.textContent = "Times Up!";
 };
 
 function newQuestion() {
@@ -52,11 +53,25 @@ function newQuestion() {
 
 function showQuestion(question) {
     questionEl.innerText = question.question;
+    question.answers.forEach(answer => {
+        const button = document.createElement('button');
+        button.innerText = answer.text;
+        button.classList.add('btn');
+        answerEl.appendChild(button);
+        if (answer.correct) {
+            button.dataset.correct = answer.correct
+        };
+        button.addEventListener('click', chooseAnswer());
+    })
+
 };
 
 function resetQuestion() {
-
-}
+    nextBtn.classList.add('hidden');
+    while (answerEl.firstChild) {
+        answerEl.removeChild(answerEl.firstChild)
+    };
+};
 
 function chooseAnswer() {
 
@@ -66,7 +81,7 @@ const questions = [
     {
         question: 'What is a word used to declare a variable?',
         answers: [
-            { text: 'vari', correct: false },
+            { text: 'variable', correct: false },
             { text: 'y', correct: false },
             { text: 'var', correct: true },
             { text: 'value', correct: false }
