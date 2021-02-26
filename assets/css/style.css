@@ -30,13 +30,14 @@ ol {
     box-shadow: 0 0 10px 2px;
 }
 
-#countdown {
+#countdown, #score {
     width: 100%;
     text-align: right;
     font-weight: bold;
     font-size: 12px;
     padding-bottom: 10px;
 }
+
 
 .highScore {
     display: flex;

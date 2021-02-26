@@ -11,15 +11,16 @@ const nextBtn = document.getElementById('next');
 const questionsEl = document.getElementById('questions');
 const questionEl = document.getElementById('question');
 const answerEl = document.getElementById('answers');
-const timerEl = document.getElementById("countdown");
-
+const timerEl = document.getElementById('countdown');
+const scoreEl = document.getElementById('score');
+const quizoverEl = document.getElementById('quizOver');
 
 let randomQuestion, chosenQuestion
 
 
 // Script for Countdown Timer
 
-var timeLeft = 120;
+var timeLeft = 10;
 
 function setCountdown() {
     var timerInterval = setInterval(function () {
@@ -27,29 +28,28 @@ function setCountdown() {
 
         minutes = (Math.floor(timeLeft / 60));
         seconds = timeLeft % 60;
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
 
-        timerEl.textContent = minutes + ":" + seconds + " remaining.";
+        timerEl.textContent = minutes + ':' + seconds + ' remaining.';
 
         if (timeLeft === 0) {
             clearInterval(timerInterval);
-            sendMessage();
+            questionsEl.classList.add('hidden');
+            quizoverEl.classList.remove('hidden');
         }
 
     }, 1000);
 };
 
-function sendMessage() {
-    timerEl.textContent = "Times Up!";
-};
+
+// Script for questions
 
 function newQuestion() {
     resetQuestion()
     showQuestion(randomQuestion[chosenQuestion])
 };
 
-// Script for questions
 
 function showQuestion(question) {
     questionEl.innerText = question.question;
@@ -73,7 +73,15 @@ function resetQuestion() {
 function chooseAnswer() {
     if (randomQuestion.length > chosenQuestion + 1) {
         nextBtn.classList.remove('hidden')
+    } else {nextBtn.classList.add('hidden');
       };
+};
+
+nextBtn.addEventListener('click', nextQuestion);
+
+function nextQuestion () {
+    chosenQuestion++
+    newQuestion()
 };
 
 const questions = [
