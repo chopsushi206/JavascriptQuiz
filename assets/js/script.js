@@ -1,7 +1,8 @@
-// write function to decrement timer 10 seconds when wrong answer given
-// write a function for choosing an answer
+
 // need a function to keep track of score and store score once quiz is over.
 // need to address functionality of timer when quiz is restarted. something funny happens
+// need to write DOM element for top score list
+// need to create click function for submit button to append name and score to List
 
 
 
@@ -27,12 +28,12 @@ function setCountdown() {
     var timerInterval = setInterval(function () {
         timeLeft--;
 
-        /*minutes = (Math.floor(timeLeft / 60));
+        minutes = (Math.floor(timeLeft / 60));
         seconds = timeLeft % 60;
         minutes = minutes < 10 ? '0' + minutes : minutes;
-        seconds = seconds < 10 ? '0' + seconds : seconds;*/
+        seconds = seconds < 10 ? '0' + seconds : seconds;
 
-        timerEl.textContent = /*minutes + ':' + seconds +*/ timeLeft + ' remaining.';
+        timerEl.textContent = minutes + ':' + seconds + ' remaining.';
 
         if (timeLeft === 0) {
             clearInterval(timerInterval);
@@ -83,7 +84,7 @@ function chooseAnswer() {
        if (isRight.correct) {
           score = score + 10;
        } else {
-           timeLeft = - 10;
+           timeLeft = timeLeft - 10;
        };
     scoreEl.innerText = score + ' points.';
     if (randomQuestion.length > chosenQuestion + 1) {
