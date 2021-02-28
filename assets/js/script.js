@@ -16,8 +16,9 @@ const timerEl = document.getElementById('countdown');
 const scoreEl = document.getElementById('score');
 const quizoverEl = document.getElementById('quizOver');
 
-let randomQuestion, chosenQuestion
+let randomQuestion, chosenQuestion;
 let timeLeft;
+let score = 0;
 
 // Script for Countdown Timer
 
@@ -26,12 +27,12 @@ function setCountdown() {
     var timerInterval = setInterval(function () {
         timeLeft--;
 
-        minutes = (Math.floor(timeLeft / 60));
+        /*minutes = (Math.floor(timeLeft / 60));
         seconds = timeLeft % 60;
         minutes = minutes < 10 ? '0' + minutes : minutes;
-        seconds = seconds < 10 ? '0' + seconds : seconds;
+        seconds = seconds < 10 ? '0' + seconds : seconds;*/
 
-        timerEl.textContent = minutes + ':' + seconds + ' remaining.';
+        timerEl.textContent = /*minutes + ':' + seconds +*/ timeLeft + ' remaining.';
 
         if (timeLeft === 0) {
             clearInterval(timerInterval);
@@ -39,6 +40,7 @@ function setCountdown() {
             questionsEl.classList.add('hidden');
             quizoverEl.classList.remove('hidden');
             restartBtn.classList.remove('hidden');
+            return timeLeft;
         }
 
     }, 1000);
@@ -71,16 +73,19 @@ function showQuestion(question) {
         button.classList.add('btn');
         answerEl.appendChild(button);
         button.addEventListener('click', chooseAnswer);
-
-    })
+    });
 
 };
 
 
 function chooseAnswer() {
-    if (answers.correct = true) {
-        console.log(answers.correct);
-    };
+       let isRight = questions[chosenQuestion].answers.filter(answer => answer.text === this.textContent)[0]
+       if (isRight.correct) {
+          score = score + 10;
+       } else {
+           timeLeft = - 10;
+       };
+    scoreEl.innerText = score + ' points.';
     if (randomQuestion.length > chosenQuestion + 1) {
         nextBtn.classList.remove('hidden')
     } else {
@@ -105,7 +110,7 @@ function nextQuestion() {
     newQuestion()
 };
 
-// Quiz Questions Object
+// Quiz Questions Object Array
 
 const questions = [
     {
