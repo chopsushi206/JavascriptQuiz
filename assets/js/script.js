@@ -1,11 +1,13 @@
 // write function to decrement timer 10 seconds when wrong answer given
 // write a function for choosing an answer
 // need a function to keep track of score and store score once quiz is over.
+// need to address functionality of timer when quiz is restarted. something funny happens
 
 
 
 const startBtn = document.getElementById('start');
 const restartBtn = document.getElementById('restart');
+const answerBtns = document.getElementById('answerbtn');
 const nextBtn = document.getElementById('next');
 const questionsEl = document.getElementById('questions');
 const questionEl = document.getElementById('question');
@@ -15,13 +17,12 @@ const scoreEl = document.getElementById('score');
 const quizoverEl = document.getElementById('quizOver');
 
 let randomQuestion, chosenQuestion
-
+let timeLeft;
 
 // Script for Countdown Timer
 
-var timeLeft = 120;
-
 function setCountdown() {
+    timeLeft = 120;
     var timerInterval = setInterval(function () {
         timeLeft--;
 
@@ -43,6 +44,16 @@ function setCountdown() {
     }, 1000);
 };
 
+function timerReset() {
+    timeLeft = 120;
+    var timerInterval = setInterval(function () {
+        timeLeft--;
+    }, 1000);
+};
+
+
+
+
 
 // Script for questions
 
@@ -59,9 +70,24 @@ function showQuestion(question) {
         button.innerText = answer.text;
         button.classList.add('btn');
         answerEl.appendChild(button);
-        button.addEventListener('click', chooseAnswer());
+        button.addEventListener('click', chooseAnswer);
+
     })
 
+};
+
+
+function chooseAnswer() {
+    if (answers.correct = true) {
+        console.log(answers.correct);
+    };
+    if (randomQuestion.length > chosenQuestion + 1) {
+        nextBtn.classList.remove('hidden')
+    } else {
+        questionsEl.classList.add('hidden');
+        quizoverEl.classList.remove('hidden');
+        restartBtn.classList.remove('hidden');
+    };
 };
 
 function resetQuestion() {
@@ -71,18 +97,10 @@ function resetQuestion() {
     };
 };
 
-function chooseAnswer() {
-    if (randomQuestion.length > chosenQuestion + 1) {
-        nextBtn.classList.remove('hidden')
-    } else { questionsEl.classList.add('hidden');
-             quizoverEl.classList.remove('hidden');
-             restartBtn.classList.remove('hidden');
-      };
-};
 
 nextBtn.addEventListener('click', nextQuestion);
 
-function nextQuestion () {
+function nextQuestion() {
     chosenQuestion++
     newQuestion()
 };
@@ -123,7 +141,7 @@ const questions = [
             { text: 'Both of these', correct: false },
             { text: 'None of these', correct: false }
         ]
-    }, 
+    },
     {
         question: 'Which built-in method combines the text of two strings and returns a new string?',
         answers: [
@@ -132,7 +150,7 @@ const questions = [
             { text: 'attatch()', correct: false },
             { text: 'None of these', correct: false }
         ]
-    }, 
+    },
     {
         question: 'Which of the following type of variable takes precedence over other if names are same?',
         answers: [
@@ -141,7 +159,7 @@ const questions = [
             { text: 'Both of these', correct: false },
             { text: 'None of these', correct: false }
         ]
-    }, 
+    },
 
 ]
 
@@ -159,7 +177,7 @@ function startQuiz() {
     setCountdown();
 };
 
-function restartQuiz () {
+function restartQuiz() {
     questionsEl.classList.remove('hidden');
     randomQuestion = questions.sort(() => Math.random() - .5);
     chosenQuestion = 0;
