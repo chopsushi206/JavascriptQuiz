@@ -81,7 +81,7 @@ ol {
     
 }
 
-.startbtn, .nextbtn, .restartbtn {
+.startbtn, .restartbtn {
     font-weight: bold;
     font-size: 18px;
     padding: 8px;

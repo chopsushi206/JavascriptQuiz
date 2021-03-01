@@ -1,15 +1,11 @@
 
-// need a function to keep track of score and store score once quiz is over.
-// need to address functionality of timer when quiz is restarted. something funny happens
-// need to write DOM element for top score list
+// need a function to store score once quiz is over.
 // need to create click function for submit button to append name and score to List
-
 
 
 const startBtn = document.getElementById('start');
 const restartBtn = document.getElementById('restart');
 const answerBtns = document.getElementById('answerbtn');
-const nextBtn = document.getElementById('next');
 const questionsEl = document.getElementById('questions');
 const questionEl = document.getElementById('question');
 const answerEl = document.getElementById('answers');
@@ -17,31 +13,32 @@ const timerEl = document.getElementById('countdown');
 const scoreEl = document.getElementById('score');
 const quizoverEl = document.getElementById('quizOver');
 
+const initialTime = 120;
 let randomQuestion, chosenQuestion;
-let timeLeft;
+let timeLeft = initialTime;
 let score = 0;
 
 // Script for Countdown Timer
+function renderTime () {
+    let minutes = (Math.floor(timeLeft / 60));
+    let seconds = timeLeft % 60;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    timerEl.textContent = minutes + ':' + seconds + ' remaining.';
+}
 
 function setCountdown() {
-    timeLeft = 120;
+    renderTime();
     var timerInterval = setInterval(function () {
+        renderTime();
         timeLeft--;
 
-        minutes = (Math.floor(timeLeft / 60));
-        seconds = timeLeft % 60;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        seconds = seconds < 10 ? '0' + seconds : seconds;
-
-        timerEl.textContent = minutes + ':' + seconds + ' remaining.';
-
-        if (timeLeft === 0) {
+        if (timeLeft <= 0) {
             clearInterval(timerInterval);
-            nextBtn.classList.add('hidden');
             questionsEl.classList.add('hidden');
             quizoverEl.classList.remove('hidden');
             restartBtn.classList.remove('hidden');
-            return timeLeft;
         }
 
     }, 1000);
@@ -80,31 +77,30 @@ function showQuestion(question) {
 
 
 function chooseAnswer() {
-       let isRight = questions[chosenQuestion].answers.filter(answer => answer.text === this.textContent)[0]
+       let isRight = questions[chosenQuestion].answers.find(answer => answer.text === this.textContent)
        if (isRight.correct) {
-          score = score + 10;
+          score += 10;
        } else {
-           timeLeft = timeLeft - 10;
+           timeLeft -= 10;
        };
     scoreEl.innerText = score + ' points.';
     if (randomQuestion.length > chosenQuestion + 1) {
-        nextBtn.classList.remove('hidden')
+        nextQuestion();
     } else {
         questionsEl.classList.add('hidden');
         quizoverEl.classList.remove('hidden');
         restartBtn.classList.remove('hidden');
     };
+
 };
 
 function resetQuestion() {
-    nextBtn.classList.add('hidden');
-    while (answerEl.firstChild) {
-        answerEl.removeChild(answerEl.firstChild)
+    if (answerEl.firstChild) {
+        answerEl.innerHTML = "";
     };
 };
 
 
-nextBtn.addEventListener('click', nextQuestion);
 
 function nextQuestion() {
     chosenQuestion++
@@ -180,6 +176,7 @@ function startQuiz() {
     randomQuestion = questions.sort(() => Math.random() - .5);
     chosenQuestion = 0;
     newQuestion();
+    timeLeft = initialTime;
     setCountdown();
 };
 
@@ -188,6 +185,7 @@ function restartQuiz() {
     randomQuestion = questions.sort(() => Math.random() - .5);
     chosenQuestion = 0;
     newQuestion();
+    timeLeft = initialTime;
     setCountdown();
     quizoverEl.classList.add('hidden');
     restartBtn.classList.add('hidden');
