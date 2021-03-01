@@ -1,6 +1,5 @@
 
-// need a function to store score once quiz is over.
-// need to create click function for submit button to append name and score to List
+// need to  append name and score to List and sort
 
 // DOM Elements
 const startBtn = document.getElementById('start');
@@ -12,16 +11,20 @@ const answerEl = document.getElementById('answers');
 const timerEl = document.getElementById('countdown');
 const scoreEl = document.getElementById('score');
 const quizoverEl = document.getElementById('quizOver');
-const quizresultEl = document.getElementById('quizResult');
+const scoreresultEl = document.getElementById('quizResult');
+const userName = document.getElementById('username');
+const savescoreBtn = document.getElementById('savescorebtn');
+
 
 // Global variables
+const lastScore = localStorage.getItem('lastScore');
 const initialTime = 120;
 let randomQuestion, chosenQuestion;
 let timeLeft = initialTime;
 let score = 0;
 
 // function to display the countdown within the browser in minutes and seconds.
-function renderTime () {
+function renderTime() {
     let minutes = (Math.floor(timeLeft / 60));
     let seconds = timeLeft % 60;
     minutes = minutes < 10 ? '0' + minutes : minutes;
@@ -46,7 +49,7 @@ function setCountdown() {
 };
 
 // Resets score when quiz restarted
-function resetScore () {
+function resetScore() {
     score = 0;
     scoreEl.innerText = score + ' points.';
 };
@@ -74,17 +77,17 @@ function showQuestion(question) {
 // adds 10 points for each correct answer and decrements 10 seconds from countdown when wrong answer selected
 // also calls nextQuestion function if questions remain in array, otherwise calls endQuiz function
 function chooseAnswer() {
-       let isRight = questions[chosenQuestion].answers.find(answer => answer.text === this.textContent)
-       if (isRight.correct) {
-          score += 10;
-       } else {
-           timeLeft -= 10;
-       };
+    let isRight = questions[chosenQuestion].answers.find(answer => answer.text === this.textContent)
+    if (isRight.correct) {
+        score += 10;
+    } else {
+        timeLeft -= 10;
+    };
     scoreEl.innerText = score + ' points.';
     if (randomQuestion.length > chosenQuestion + 1) {
         nextQuestion();
     } else {
-     endQuiz();
+        endQuiz();
     };
 
 };
@@ -190,9 +193,45 @@ function restartQuiz() {
 };
 
 // function that runs if time runs out or user completes questions
-function endQuiz () {
+function endQuiz() {
     questionsEl.classList.add('hidden');
     quizoverEl.classList.remove('hidden');
     restartBtn.classList.remove('hidden');
-    quizresultEl.innerHTML = score;
+    scoreresultEl.innerHTML = score;
+    saveFinalScore();
 };
+
+// Saves last score to local storage
+
+function saveFinalScore() {
+    let userInfo = {
+        name: userName.value.trim(),
+        scoreResult: score,
+    };
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+};
+
+
+// Grabs string storing high score info from local storage and display on page
+function renderFinalScore() {
+    let userScore = JSON.parse(localStorage.getItem('userInfo'));
+    if (userScore !== null) {
+        document.getElementById('scoreplace').innerHTML = userScore.name, userScore.scoreResult;
+    } else {
+        return;
+    };
+};
+
+// event listener for button to prevent page refresh and submit values to local sotrage
+savescoreBtn.addEventListener('click', function (event) {
+    event.preventDefault();
+    saveFinalScore();
+    renderFinalScore();
+});
+
+
+//function to fire renderFinalScore on page load
+function init() {
+    renderFinalScore();
+}
+init();

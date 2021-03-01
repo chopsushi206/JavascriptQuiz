@@ -24,6 +24,12 @@ ol {
     margin: 20px;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+
+}
+
 .card {
     background-color: #E9E9E9;
     width: 800px;

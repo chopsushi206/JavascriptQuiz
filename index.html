@@ -23,18 +23,18 @@
         <div id="quizOver" class="highScore hidden">
             <h1>- High Scores -</h1>
             <ol>
-                <li>jeff</li>
-                <li>frank</li>
-                <li>lihua</li>
-                <li>christine</li>
-                <li>your mom</li>
+                <li id="scoreplace"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
             </ol>
             <p>The Quiz is over! Your score is <span id="quizResult"></span> points. Please enter your name to retain your score.</p>
             <p>
-            <form>
-                <label for="name">Name:</label><br>
-                <input type="text" id="name" name="name" size="20" maxlength="30">
-                <input type="submit" value="Submit" class="btn">
+            <form id="highscores">
+                <label for="name">Name:</label>
+                <input type="text" id="username" name="username" size="20" maxlength="30">
+                <button id="savescorebtn" class="btn">Submit</button>
             </form>
             </p>
         </div>
