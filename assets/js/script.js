@@ -45,6 +45,12 @@ function setCountdown() {
     }, 1000);
 };
 
+// Resets score when quiz restarted
+function resetScore () {
+    score = 0;
+    scoreEl.innerText = score + ' points.';
+};
+
 // funtion to obtain a random question. variables randomQuestion and chosenQuestion defined within start quiz function
 function newQuestion() {
     resetQuestion()
@@ -65,6 +71,8 @@ function showQuestion(question) {
 };
 
 // executed when user clicks answer button
+// adds 10 points for each correct answer and decrements 10 seconds from countdown when wrong answer selected
+// also calls nextQuestion function if questions remain in array, otherwise calls endQuiz function
 function chooseAnswer() {
        let isRight = questions[chosenQuestion].answers.find(answer => answer.text === this.textContent)
        if (isRight.correct) {
@@ -176,7 +184,7 @@ function restartQuiz() {
     newQuestion();
     timeLeft = initialTime;
     setCountdown();
-    score = 0;
+    resetScore();
     quizoverEl.classList.add('hidden');
     restartBtn.classList.add('hidden');
 };
