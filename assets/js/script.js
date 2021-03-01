@@ -2,7 +2,7 @@
 // need a function to store score once quiz is over.
 // need to create click function for submit button to append name and score to List
 
-
+// DOM Elements
 const startBtn = document.getElementById('start');
 const restartBtn = document.getElementById('restart');
 const answerBtns = document.getElementById('answerbtn');
@@ -12,13 +12,15 @@ const answerEl = document.getElementById('answers');
 const timerEl = document.getElementById('countdown');
 const scoreEl = document.getElementById('score');
 const quizoverEl = document.getElementById('quizOver');
+const quizresultEl = document.getElementById('quizResult');
 
+// Global variables
 const initialTime = 120;
 let randomQuestion, chosenQuestion;
 let timeLeft = initialTime;
 let score = 0;
 
-// Script for Countdown Timer
+// function to display the countdown within the browser in minutes and seconds.
 function renderTime () {
     let minutes = (Math.floor(timeLeft / 60));
     let seconds = timeLeft % 60;
@@ -28,6 +30,7 @@ function renderTime () {
     timerEl.textContent = minutes + ':' + seconds + ' remaining.';
 }
 
+//function that decrements timer countdown once user starts quiz. also calls endQuiz function when time runs out
 function setCountdown() {
     renderTime();
     var timerInterval = setInterval(function () {
@@ -36,33 +39,19 @@ function setCountdown() {
 
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
-            questionsEl.classList.add('hidden');
-            quizoverEl.classList.remove('hidden');
-            restartBtn.classList.remove('hidden');
+            endQuiz();
         }
 
     }, 1000);
 };
 
-function timerReset() {
-    timeLeft = 120;
-    var timerInterval = setInterval(function () {
-        timeLeft--;
-    }, 1000);
-};
-
-
-
-
-
-// Script for questions
-
+// funtion to obtain a random question. variables randomQuestion and chosenQuestion defined within start quiz function
 function newQuestion() {
     resetQuestion()
     showQuestion(randomQuestion[chosenQuestion])
 };
 
-
+//shows current question and renders answer buttons
 function showQuestion(question) {
     questionEl.innerText = question.question;
     question.answers.forEach(answer => {
@@ -75,7 +64,7 @@ function showQuestion(question) {
 
 };
 
-
+// executed when user clicks answer button
 function chooseAnswer() {
        let isRight = questions[chosenQuestion].answers.find(answer => answer.text === this.textContent)
        if (isRight.correct) {
@@ -87,13 +76,12 @@ function chooseAnswer() {
     if (randomQuestion.length > chosenQuestion + 1) {
         nextQuestion();
     } else {
-        questionsEl.classList.add('hidden');
-        quizoverEl.classList.remove('hidden');
-        restartBtn.classList.remove('hidden');
+     endQuiz();
     };
 
 };
 
+//resets question
 function resetQuestion() {
     if (answerEl.firstChild) {
         answerEl.innerHTML = "";
@@ -101,14 +89,14 @@ function resetQuestion() {
 };
 
 
-
+// selects next question
 function nextQuestion() {
     chosenQuestion++
     newQuestion()
 };
 
-// Quiz Questions Object Array
 
+// Quiz Questions Object Array
 const questions = [
     {
         question: 'What is a word used to declare a variable?',
@@ -165,11 +153,11 @@ const questions = [
 
 ]
 
-// Script to start quiz
-
+// Event listeners for Start and Restart button
 startBtn.addEventListener('click', startQuiz);
 restartBtn.addEventListener('click', restartQuiz);
 
+// function that initial starts App
 function startQuiz() {
     startBtn.classList.add('hidden');
     questionsEl.classList.remove('hidden');
@@ -180,6 +168,7 @@ function startQuiz() {
     setCountdown();
 };
 
+// function to restart after quiz has been completed before
 function restartQuiz() {
     questionsEl.classList.remove('hidden');
     randomQuestion = questions.sort(() => Math.random() - .5);
@@ -187,6 +176,15 @@ function restartQuiz() {
     newQuestion();
     timeLeft = initialTime;
     setCountdown();
+    score = 0;
     quizoverEl.classList.add('hidden');
     restartBtn.classList.add('hidden');
+};
+
+// function that runs if time runs out or user completes questions
+function endQuiz () {
+    questionsEl.classList.add('hidden');
+    quizoverEl.classList.remove('hidden');
+    restartBtn.classList.remove('hidden');
+    quizresultEl.innerHTML = score;
 };
