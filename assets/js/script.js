@@ -1,5 +1,4 @@
 
-// need to  append name and score to List and sort
 
 // DOM Elements
 const startBtn = document.getElementById('start');
@@ -217,11 +216,14 @@ function saveFinalScore() {
 
 // Grabs string storing high score info from local storage and display on page
 function renderFinalScore() {
-   // let userScore = JSON.parse(localStorage.getItem('highScores'));
-    if (highScores !== null) {
-        document.getElementById('scorelist').innerHTML = '<li id="scoreplace">' + highScores[0].name + highScores[1].scoreResult +'</li>';
-    } else {
-        return;
+   let userScore = JSON.parse(localStorage.getItem('highScores'));
+    var userScoreLength = userScore.length;
+    for (var i = 0; i < userScoreLength; i++) {
+        console.log(userScore[i]);
+        const listposition = document.createElement('li');
+        listposition.innerText = userScore[i].name + ' ' + userScore[i].scoreResult + ' points';
+        listposition.classList.add('scoreplace');
+        scorelistEl.appendChild(listposition);
     };
 };
 
@@ -233,7 +235,7 @@ savescoreBtn.addEventListener('click', function (event) {
 });
 
 //function to fire renderFinalScore on page load
-function init() {
+/*function init() {
     renderFinalScore();
 }
-init();
+init();*/
