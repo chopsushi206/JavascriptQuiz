@@ -14,10 +14,12 @@ const quizoverEl = document.getElementById('quizOver');
 const scoreresultEl = document.getElementById('quizResult');
 const userName = document.getElementById('username');
 const savescoreBtn = document.getElementById('savescorebtn');
+const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
+const scorelistEl = document.getElementById('scorelist');
 
 
 // Global variables
-const lastScore = localStorage.getItem('lastScore');
+const maxHighScores = 5;
 const initialTime = 120;
 let randomQuestion, chosenQuestion;
 let timeLeft = initialTime;
@@ -208,27 +210,28 @@ function saveFinalScore() {
         name: userName.value.trim(),
         scoreResult: score,
     };
-    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+    highScores.push(userInfo);
+    highScores.sort((a,b) => b.scoreResult - a.scoreResult);
+    highScores.splice(5);
+    localStorage.setItem('highScores', JSON.stringify(highScores));
 };
-
 
 // Grabs string storing high score info from local storage and display on page
 function renderFinalScore() {
-    let userScore = JSON.parse(localStorage.getItem('userInfo'));
+    let userScore = JSON.parse(localStorage.getItem('highScores'));
     if (userScore !== null) {
-        document.getElementById('scoreplace').innerHTML = userScore.name, userScore.scoreResult;
+        document.getElementById('scorelist').innerHTML = `<li id="scoreplace">userScore.name, userScore.scoreResult</li>`;
     } else {
         return;
     };
 };
 
-// event listener for button to prevent page refresh and submit values to local sotrage
+// event listener for button to prevent page refresh and submit values to local storage
 savescoreBtn.addEventListener('click', function (event) {
     event.preventDefault();
     saveFinalScore();
     renderFinalScore();
 });
-
 
 //function to fire renderFinalScore on page load
 function init() {
