@@ -200,7 +200,6 @@ function endQuiz() {
     quizoverEl.classList.remove('hidden');
     restartBtn.classList.remove('hidden');
     scoreresultEl.innerHTML = score;
-    saveFinalScore();
 };
 
 // Saves last score to local storage
@@ -218,9 +217,9 @@ function saveFinalScore() {
 
 // Grabs string storing high score info from local storage and display on page
 function renderFinalScore() {
-    let userScore = JSON.parse(localStorage.getItem('highScores'));
-    if (userScore !== null) {
-        document.getElementById('scorelist').innerHTML = `<li id="scoreplace">userScore.name, userScore.scoreResult</li>`;
+   // let userScore = JSON.parse(localStorage.getItem('highScores'));
+    if (highScores !== null) {
+        document.getElementById('scorelist').innerHTML = '<li id="scoreplace">' + highScores[0].name + highScores[1].scoreResult +'</li>';
     } else {
         return;
     };
