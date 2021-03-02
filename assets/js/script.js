@@ -4,6 +4,7 @@
 const startBtn = document.getElementById('start');
 const restartBtn = document.getElementById('restart');
 const answerBtns = document.getElementById('answerbtn');
+const introEl = document.getElementById('intro');
 const questionsEl = document.getElementById('questions');
 const questionEl = document.getElementById('question');
 const answerEl = document.getElementById('answers');
@@ -172,6 +173,7 @@ restartBtn.addEventListener('click', restartQuiz);
 // function that initial starts App
 function startQuiz() {
     startBtn.classList.add('hidden');
+    introEl.classList.add('hidden');
     questionsEl.classList.remove('hidden');
     randomQuestion = questions.sort(() => Math.random() - .5);
     chosenQuestion = 0;
@@ -210,7 +212,7 @@ function saveFinalScore() {
     };
     highScores.push(userInfo);
     highScores.sort((a,b) => b.scoreResult - a.scoreResult);
-    highScores.splice(5);
+    highScores.slice(5);
     localStorage.setItem('highScores', JSON.stringify(highScores));
 };
 
@@ -218,6 +220,7 @@ function saveFinalScore() {
 function renderFinalScore() {
    let userScore = JSON.parse(localStorage.getItem('highScores'));
     var userScoreLength = userScore.length;
+    scorelistEl.innerHTML = '';
     for (var i = 0; i < userScoreLength; i++) {
         console.log(userScore[i]);
         const listposition = document.createElement('li');

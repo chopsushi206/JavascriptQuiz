@@ -46,9 +46,11 @@ it was at this point the quiz portion was pretty functional and so then concentr
 
 ## Screenshots
 
-![Top Half of Full Size Screenshot](readmeimg/screen1.jpg)
+![Start Quiz](readmeimg/start.png)
 
-![Bottom Half of Full Size Screenshot](readmeimg/screen2.jpg)
+![Questions](readmeimg/quiz.png)
+
+![High Scores](readmeimg/highscore.png)
 
 ---
 
